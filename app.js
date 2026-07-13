@@ -1,5 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
   
+  // --- Live Clock Widget ---
+  const clockEl = document.getElementById('nav-clock');
+  if (clockEl) {
+    function updateClock() {
+      const now = new Date();
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const istTime = new Date(utc + (5.5 * 3600000));
+      const hours = String(istTime.getHours()).padStart(2, '0');
+      const minutes = String(istTime.getMinutes()).padStart(2, '0');
+      clockEl.innerText = `${hours}:${minutes} IST`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  }
+
+  // --- Theme Toggle ---
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  if (themeToggle && themeIcon) {
+    const isLight = document.documentElement.classList.contains('light-theme');
+    themeIcon.innerText = isLight ? '🌙' : '🔆';
+    
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light-theme');
+      const nowLight = document.documentElement.classList.contains('light-theme');
+      localStorage.setItem('theme', nowLight ? 'light' : 'dark');
+      themeIcon.innerText = nowLight ? '🌙' : '🔆';
+    });
+  }
+
   /* --- Lenis Smooth Scroll --- */
   const lenis = new Lenis({
     duration: 1.2,
@@ -711,6 +741,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pPulseX > projectNnCanvas.width + 100) pPulseX = -50;
       }
 
+      const isLight = document.documentElement.classList.contains('light-theme');
+
       // Connections
       for (let i = 0; i < pNodes.length; i++) {
         const n1 = pNodes[i];
@@ -724,7 +756,7 @@ document.addEventListener('DOMContentLoaded', () => {
               pCtx.strokeStyle = `rgba(217, 107, 67, ${0.4 + (40 - distToPulse)/40 * 0.6})`;
               pCtx.lineWidth = 1.5;
             } else {
-              pCtx.strokeStyle = 'rgba(39, 41, 44, 0.4)';
+              pCtx.strokeStyle = isLight ? 'rgba(27, 25, 23, 0.12)' : 'rgba(39, 41, 44, 0.4)';
               pCtx.lineWidth = 0.7;
             }
             
@@ -740,7 +772,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pNodes.forEach(node => {
         const distToPulse = Math.abs(node.x - pPulseX);
         let nodeRadius = 6;
-        let nodeColor = '#27292C'; // Cold iron gray inert node
+        let nodeColor = isLight ? '#DDD5BE' : '#27292C'; // Light sand vs dark iron gray inert node
         let glowRadius = 0;
 
         if (distToPulse < 30) {
@@ -760,7 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         pCtx.fillStyle = nodeColor;
-        pCtx.strokeStyle = '#161719'; // Border matching dark canvas background
+        pCtx.strokeStyle = isLight ? '#EBE5D8' : '#161719'; // Border matching canvas background
         pCtx.lineWidth = 1.2;
         pCtx.beginPath();
         pCtx.arc(node.x, node.y, nodeRadius, 0, Math.PI * 2);
@@ -769,7 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // Overlay text diagnostics in the corner
-      pCtx.fillStyle = 'rgba(229, 230, 228, 0.45)'; // Cool silver text
+      pCtx.fillStyle = isLight ? 'rgba(27, 25, 23, 0.55)' : 'rgba(229, 230, 228, 0.45)'; // Cool text readability
       pCtx.font = '9px monospace';
       pCtx.fillText(`Epochs: 148/200`, 15, 20);
       pCtx.fillText(`Loss: 0.041`, 15, 33);

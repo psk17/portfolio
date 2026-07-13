@@ -8,6 +8,14 @@
   <title>Pavankumar S Kallur | AI & ML Developer Portfolio</title>
   
   <link rel="stylesheet" href="style.css">
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('light-theme');
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -28,6 +36,12 @@
         <li><a href="#skills" id="nav-skills">Skills</a></li>
         <li><a href="#pathways" id="nav-pathways">Pathways</a></li>
         <li><a href="#contact" id="nav-contact">Contact</a></li>
+        <li class="nav-clock-item"><span id="nav-clock" class="nav-clock">--:-- IST</span></li>
+        <li class="nav-theme-item">
+          <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+            <span id="themeIcon">🔆</span>
+          </button>
+        </li>
       </ul>
     </nav>
   </header>
