@@ -8,18 +8,18 @@
 
 /* --- Custom Variables & Tokens --- */
 :root {
-  --bg-color: #f7f4ed;      /* Warm textured aged washi paper */
-  --bg-secondary: #efe7da;  /* Richer damp clay tone */
-  --text-color: #23221f;    /* Deeper charcoal soot / Sumi ink */
-  --text-muted: #66635c;    /* Weathered stone gray */
-  --accent-moss: #556652;   /* Green moss */
-  --accent-rust: #ab6a4f;   /* Terra cotta clay */
-  --accent-gold: #c29d66;   /* Tarnished brass */
-  --border-color: #dfd8c4;  /* Raw linen border */
+  --bg-color: #1B1917;      /* Warm charcoal, not pure black */
+  --bg-secondary: #252220;  /* Warm dark grey */
+  --text-color: #EDE8E1;    /* Off-white raw linen */
+  --text-muted: #928C81;    /* Muted secondary text adjusted for >4.5:1 WCAG AA contrast */
+  --accent-moss: #7A8871;   /* Faded sage (sparing accent secondary) */
+  --accent-rust: #B5623B;   /* Burnt clay/terracotta (accent primary) */
+  --accent-gold: #B5623B;   /* Burnt clay/terracotta (fallback for accent primary) */
+  --border-color: #3A3632;  /* Dark linen border */
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'Outfit', sans-serif;
   --cursor-size: 20px;
-  --cursor-color: rgba(85, 102, 82, 0.2);
+  --cursor-color: rgba(181, 98, 59, 0.15); /* Terracotta-themed cursor shadow */
 }
 
 /* --- Base Setup --- */
@@ -40,11 +40,14 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: 16px;
   background-color: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
+}
+
+html.lenis {
+  scroll-behavior: auto !important;
 }
 
 body {
@@ -53,6 +56,7 @@ body {
   line-height: 1.7;
   position: relative;
   overflow-x: hidden;
+  touch-action: pan-y;
 }
 
 /* --- Texture Overlay (Dynamic Washi Paper Grain) --- */
@@ -830,7 +834,7 @@ nav a:hover {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(250, 247, 242, 0.2);
+  border-bottom: 1px solid rgba(27, 25, 23, 0.2);
   padding: 0.8rem 0;
   color: var(--bg-color);
   font-family: var(--font-sans);
@@ -849,7 +853,7 @@ nav a:hover {
   top: 0.8rem;
   left: 0;
   font-size: 0.9rem;
-  color: rgba(250, 247, 242, 0.4);
+  color: rgba(27, 25, 23, 0.45);
   pointer-events: none;
   transition: transform 0.3s, font-size 0.3s, color 0.3s;
 }
@@ -861,7 +865,7 @@ nav a:hover {
 .form-group textarea:not(:placeholder-shown) ~ label {
   transform: translateY(-1.5rem);
   font-size: 0.75rem;
-  color: var(--accent-gold);
+  color: var(--accent-rust);
 }
 
 .contact-form .btn-primary {
@@ -1096,6 +1100,80 @@ h2[data-section-name]::before {
   /* Remove duplicate pebbles for accessibility/screen readers under reduced motion */
   .marquee-track .pebble:nth-child(n+6) {
     display: none;
+  }
+}
+
+/* --- Phase 7: Pinned Scroll Storytelling Layout --- */
+.story-block {
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+  margin-bottom: 25vh;
+}
+
+.story-block:first-of-type {
+  opacity: 1; /* intro block is visible by default */
+}
+
+.story-label {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent-rust);
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 993px) {
+  .project-pinned-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 15rem;
+  }
+
+  .project-pinned-left {
+    position: sticky;
+    top: 15vh;
+    height: fit-content;
+    will-change: transform;
+  }
+
+  .project-pinned-right {
+    padding-top: 2vh;
+    padding-bottom: 30vh;
+  }
+  
+  .project-pinned-wrapper:nth-child(even) {
+    grid-template-columns: 1.2fr 1fr;
+  }
+  
+  .project-pinned-wrapper:nth-child(even) .project-pinned-left {
+    order: 2;
+  }
+  
+  .project-pinned-wrapper:nth-child(even) .project-pinned-right {
+    order: 1;
+  }
+}
+
+@media (max-width: 992px) {
+  .project-pinned-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 8rem;
+  }
+
+  .story-block {
+    opacity: 1 !important;
+    margin-bottom: 2rem;
+  }
+  
+  .story-block:last-child {
+    margin-bottom: 0;
   }
 }
 

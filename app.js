@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
+    lerp: 0.1, // Heavier, more cinematic feel
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
@@ -113,6 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 0,
         duration: 0.6,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: aboutTitle,
           start: 'top 85%',
@@ -132,6 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: 0.6,
         stagger: 0.08,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: quote,
           start: 'top 85%',
@@ -151,6 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: 0.6,
         stagger: 0.08,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: p,
           start: 'top 85%',
@@ -167,6 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 0,
         duration: 0.6,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: projectsHeader,
           start: 'top 85%'
@@ -174,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    const projectItems = document.querySelectorAll('.project-item');
+    const projectItems = document.querySelectorAll('.project-item, .project-pinned-wrapper');
     projectItems.forEach((item) => {
       const media = item.querySelector('.project-media');
       const info = item.querySelector('.project-info');
@@ -190,6 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: 0.6,
         stagger: 0.15,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: item,
           start: 'top 85%',
@@ -206,6 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 0,
         duration: 0.6,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: gardenIntro,
           start: 'top 85%'
@@ -230,6 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
           from: 'start'
         },
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: '.skills-marquee-container',
           start: 'top 85%',
@@ -246,6 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 0,
         duration: 0.6,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: eduIntro,
           start: 'top 85%'
@@ -265,6 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
         opacity: 1,
         duration: 0.4,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: item,
           start: 'top 85%'
@@ -277,6 +296,8 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: 0.5,
         stagger: 0.1,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: item,
           start: 'top 85%'
@@ -295,6 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 0,
         duration: 0.6,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: contactLayout,
           start: 'top 85%'
@@ -306,6 +329,8 @@ document.addEventListener('DOMContentLoaded', () => {
         y: 0,
         duration: 0.6,
         ease: 'power2.out',
+        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
+        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
           trigger: contactLayout,
           start: 'top 85%'
@@ -339,6 +364,42 @@ document.addEventListener('DOMContentLoaded', () => {
           end: 'bottom top',
           scrub: 1
         }
+      });
+    }
+
+    // 8. Pinned Scroll Storytelling (Top 2 Projects)
+    if (window.matchMedia('(min-width: 993px)').matches) {
+      const pinnedWrappers = document.querySelectorAll('.project-pinned-wrapper');
+      pinnedWrappers.forEach(wrapper => {
+        const left = wrapper.querySelector('.project-pinned-left');
+        const right = wrapper.querySelector('.project-pinned-right');
+        const blocks = right.querySelectorAll('.story-block');
+        
+        // Pin the left media element as right text scrolls
+        ScrollTrigger.create({
+          trigger: wrapper,
+          start: 'top 15%',
+          end: 'bottom bottom',
+          pin: left,
+          pinSpacing: false,
+          invalidateOnRefresh: true
+        });
+        
+        // Highlight active story blocks on scroll
+        blocks.forEach((block, idx) => {
+          if (idx === 0) return; // Skip intro block
+          
+          gsap.fromTo(block, { opacity: 0.3 }, {
+            opacity: 1,
+            scrollTrigger: {
+              trigger: block,
+              start: 'top 65%',
+              end: 'bottom 35%',
+              toggleActions: 'play reverse play reverse',
+              invalidateOnRefresh: true
+            }
+          });
+        });
       });
     }
   }
@@ -426,7 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('mouseenter', () => {
         cursor.style.width = '55px';
         cursor.style.height = '55px';
-        cursor.style.backgroundColor = 'rgba(171, 106, 79, 0.12)'; // Rust clay translucent fill
+        cursor.style.backgroundColor = 'rgba(181, 98, 59, 0.12)'; // Terracotta clay translucent fill
         cursor.style.border = '1px solid var(--accent-rust)';
         cursorDot.style.backgroundColor = 'var(--accent-rust)';
       });
