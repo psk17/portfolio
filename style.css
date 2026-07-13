@@ -164,6 +164,23 @@ html.light-theme body::before {
   animation: grain-animation 1.5s steps(8) infinite;
 }
 
+html.light-theme .grain-overlay {
+  opacity: 0.022; /* Soften unbleached grain texture overlay */
+}
+
+/* Warm Ambient Shadows for Light Theme */
+html.light-theme .face-frame {
+  box-shadow: 0 8px 30px rgba(42, 35, 32, 0.03);
+}
+
+html.light-theme .face-frame:hover {
+  box-shadow: 0 15px 40px rgba(42, 35, 32, 0.05);
+}
+
+html.light-theme .project-media {
+  box-shadow: 0 10px 30px rgba(42, 35, 32, 0.02);
+}
+
 @keyframes grain-animation {
   0%, 100% { transform: translate(0, 0); }
   10% { transform: translate(-2%, -5%); }
@@ -870,6 +887,13 @@ nav a:hover {
 #contact {
   background-color: var(--text-color);
   color: var(--bg-color);
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+html.light-theme #contact {
+  background-color: var(--bg-secondary);
+  color: var(--text-color);
+  border-top: 1px solid var(--border-color);
 }
 
 #contact h2, #contact p {
