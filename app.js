@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    const pebbles = document.querySelectorAll('.skills-garden .pebble');
+    const pebbles = document.querySelectorAll('.skills-marquee-container .pebble');
     if (pebbles.length > 0) {
       gsap.fromTo(pebbles, {
         opacity: 0,
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: '.skills-garden',
+          trigger: '.skills-marquee-container',
           start: 'top 85%',
           toggleActions: 'play none none none'
         }
@@ -309,6 +309,35 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollTrigger: {
           trigger: contactLayout,
           start: 'top 85%'
+        }
+      });
+    }
+
+    // 7. Transition Marquees (Scroll-linked horizontal translation)
+    const marqueeAboutProjects = document.querySelector('#marquee-about-projects');
+    if (marqueeAboutProjects) {
+      gsap.to(marqueeAboutProjects, {
+        x: '-20%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: marqueeAboutProjects,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        }
+      });
+    }
+
+    const marqueeProjectsSkills = document.querySelector('#marquee-projects-skills');
+    if (marqueeProjectsSkills) {
+      gsap.to(marqueeProjectsSkills, {
+        x: '10%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: marqueeProjectsSkills,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
         }
       });
     }

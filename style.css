@@ -949,3 +949,153 @@ body.gsap-enabled .reveal {
     gap: 4rem;
   }
 }
+
+/* --- Phase 6: Editorial Style Elements --- */
+
+/* 1. Numbered Section Labels */
+body {
+  counter-reset: section-counter;
+}
+
+#about, #projects, #skills, #education, #contact {
+  counter-increment: section-counter;
+}
+
+/* Render numbers automatically above the section title headings */
+h2[data-section-name]::before {
+  content: "Nº00" counter(section-counter) " — " attr(data-section-name);
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--accent-rust);
+  margin-bottom: 0.8rem;
+  opacity: 0.85;
+}
+
+/* Adjust centering alignment for education section label */
+#education .garden-intro h2[data-section-name]::before {
+  text-align: center;
+}
+
+/* 2. Textual Transition Marquee Bands */
+.marquee-band-container {
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 1.5rem 0;
+  pointer-events: none;
+  background-color: transparent;
+  border-top: 1.5px solid var(--border-color);
+  border-bottom: 1.5px solid var(--border-color);
+}
+
+.marquee-band-inner {
+  display: flex;
+  white-space: nowrap;
+  gap: 3rem;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--text-color);
+  opacity: 0.08;
+  letter-spacing: 0.05em;
+  width: max-content;
+}
+
+/* 3. Horizontal Auto-Scrolling Skills Marquee */
+.skills-marquee-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+  padding: 1.5rem 0;
+}
+
+.skills-marquee-row {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Infinite sliding keyframes */
+.animate-left {
+  animation: scroll-left 32s linear infinite;
+}
+
+.animate-right {
+  animation: scroll-right 32s linear infinite;
+}
+
+/* Pause scroll on hover for desktop pointer users */
+.skills-marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Support prefers-reduced-motion to halt marquees completely */
+@media (prefers-reduced-motion: reduce) {
+  .animate-left, .animate-right {
+    animation: none !important;
+  }
+  .skills-marquee-container {
+    width: auto;
+    left: auto;
+    right: auto;
+    margin-left: 0;
+    margin-right: 0;
+    overflow: visible;
+  }
+  .skills-marquee-row {
+    overflow: visible;
+  }
+  .marquee-track {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    transform: none !important;
+  }
+  /* Remove duplicate pebbles for accessibility/screen readers under reduced motion */
+  .marquee-track .pebble:nth-child(n+6) {
+    display: none;
+  }
+}
+
