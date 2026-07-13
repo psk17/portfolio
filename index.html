@@ -65,7 +65,7 @@
         "True depth in intelligence lies not in flawless execution, but in how we handle the noise, the outliers, and the beautiful imperfections of the real world."
       </div>
       <div class="philosophy-text reveal delay-200">
-        <h2>About My <em>Craft</em></h2>
+        <h2 data-section-name="About">About My <em>Craft</em></h2>
         <p>
           I am a final-year B.Tech student specializing in Artificial Intelligence and Machine Learning. My approach combines rigorous mathematics with a designer's eye for simple, clean system architecture.
         </p>
@@ -84,11 +84,23 @@
     </svg>
   </div>
 
+  <!-- Textual Transition Marquee (About -> Projects) -->
+  <div class="marquee-band-container">
+    <div class="marquee-band-inner" id="marquee-about-projects">
+      <span>CHRONICLES OF CREATION</span> — 
+      <span>CHRONICLES OF CREATION</span> — 
+      <span>CHRONICLES OF CREATION</span> — 
+      <span>CHRONICLES OF CREATION</span> — 
+      <span>CHRONICLES OF CREATION</span> — 
+      <span>CHRONICLES OF CREATION</span>
+    </div>
+  </div>
+
   <!-- Section: Projects -->
   <section id="projects" class="section">
     <div class="container">
       <div class="projects-header reveal">
-        <h2>Chronicles of <em>Creation</em></h2>
+        <h2 data-section-name="Projects">Chronicles of <em>Creation</em></h2>
         <p>Selected works bridging intelligence, threat analysis, and platform architecture.</p>
       </div>
 
@@ -202,73 +214,134 @@
     </svg>
   </div>
 
+  <!-- Textual Transition Marquee (Projects -> Skills) -->
+  <div class="marquee-band-container">
+    <div class="marquee-band-inner" id="marquee-projects-skills">
+      <span>GARDEN OF CAPABILITIES</span> — 
+      <span>GARDEN OF CAPABILITIES</span> — 
+      <span>GARDEN OF CAPABILITIES</span> — 
+      <span>GARDEN OF CAPABILITIES</span> — 
+      <span>GARDEN OF CAPABILITIES</span> — 
+      <span>GARDEN OF CAPABILITIES</span>
+    </div>
+  </div>
+
   <!-- Section: Skills (Garden of Competencies) -->
   <section id="skills" class="section">
     <div class="container">
       <div class="garden-intro reveal">
-        <h2>A Garden of <em>Capabilities</em></h2>
+        <h2 data-section-name="Skills">A Garden of <em>Capabilities</em></h2>
         <p>
           Like stones carefully selected and placed in a Zen garden, each tool serves a precise, mindful purpose in my development workflow.
         </p>
       </div>
       
-      <div class="skills-garden reveal delay-200">
-        <!-- Languages -->
-        <div class="pebble pebble-1">
-          <span class="pebble-category">Language</span>
-          <span class="pebble-name">Python</span>
-        </div>
-        <div class="pebble pebble-2">
-          <span class="pebble-category">Language</span>
-          <span class="pebble-name">JavaScript</span>
-        </div>
-        <div class="pebble pebble-3">
-          <span class="pebble-category">Language</span>
-          <span class="pebble-name">C Code</span>
+      <!-- Horizontal Scrolling Skills Marquee -->
+      <div class="skills-marquee-container reveal delay-200">
+        
+        <!-- Track 1 (Scrolls Left) -->
+        <div class="skills-marquee-row">
+          <div class="marquee-track animate-left">
+            <div class="pebble pebble-1">
+              <span class="pebble-category">Language</span>
+              <span class="pebble-name">Python</span>
+            </div>
+            <div class="pebble pebble-3">
+              <span class="pebble-category">Language</span>
+              <span class="pebble-name">C Code</span>
+            </div>
+            <div class="pebble pebble-4">
+              <span class="pebble-category">AI / ML</span>
+              <span class="pebble-name">LLMs & RAG</span>
+            </div>
+            <div class="pebble pebble-7">
+              <span class="pebble-category">Data</span>
+              <span class="pebble-name">Power BI</span>
+            </div>
+            <div class="pebble pebble-1">
+              <span class="pebble-category">Backend</span>
+              <span class="pebble-name">FastAPI</span>
+            </div>
+            <!-- Duplicated Items for Seamless Loop -->
+            <div class="pebble pebble-1">
+              <span class="pebble-category">Language</span>
+              <span class="pebble-name">Python</span>
+            </div>
+            <div class="pebble pebble-3">
+              <span class="pebble-category">Language</span>
+              <span class="pebble-name">C Code</span>
+            </div>
+            <div class="pebble pebble-4">
+              <span class="pebble-category">AI / ML</span>
+              <span class="pebble-name">LLMs & RAG</span>
+            </div>
+            <div class="pebble pebble-7">
+              <span class="pebble-category">Data</span>
+              <span class="pebble-name">Power BI</span>
+            </div>
+            <div class="pebble pebble-1">
+              <span class="pebble-category">Backend</span>
+              <span class="pebble-name">FastAPI</span>
+            </div>
+          </div>
         </div>
 
-        <!-- AI/ML -->
-        <div class="pebble pebble-4">
-          <span class="pebble-category">AI / ML</span>
-          <span class="pebble-name">LLMs & RAG</span>
-        </div>
-        <div class="pebble pebble-5">
-          <span class="pebble-category">AI / ML</span>
-          <span class="pebble-name">Deep Learning</span>
-        </div>
-        <div class="pebble pebble-6">
-          <span class="pebble-category">AI / ML</span>
-          <span class="pebble-name">Machine Learning</span>
+        <!-- Track 2 (Scrolls Right) -->
+        <div class="skills-marquee-row">
+          <div class="marquee-track animate-right">
+            <div class="pebble pebble-2">
+              <span class="pebble-category">Language</span>
+              <span class="pebble-name">JavaScript</span>
+            </div>
+            <div class="pebble pebble-5">
+              <span class="pebble-category">AI / ML</span>
+              <span class="pebble-name">Deep Learning</span>
+            </div>
+            <div class="pebble pebble-6">
+              <span class="pebble-category">AI / ML</span>
+              <span class="pebble-name">Machine Learning</span>
+            </div>
+            <div class="pebble pebble-8">
+              <span class="pebble-category">Data</span>
+              <span class="pebble-name">SQL Databases</span>
+            </div>
+            <div class="pebble pebble-2">
+              <span class="pebble-category">Web</span>
+              <span class="pebble-name">MERN Stack</span>
+            </div>
+            <!-- Duplicated Items for Seamless Loop -->
+            <div class="pebble pebble-2">
+              <span class="pebble-category">Language</span>
+              <span class="pebble-name">JavaScript</span>
+            </div>
+            <div class="pebble pebble-5">
+              <span class="pebble-category">AI / ML</span>
+              <span class="pebble-name">Deep Learning</span>
+            </div>
+            <div class="pebble pebble-6">
+              <span class="pebble-category">AI / ML</span>
+              <span class="pebble-name">Machine Learning</span>
+            </div>
+            <div class="pebble pebble-8">
+              <span class="pebble-category">Data</span>
+              <span class="pebble-name">SQL Databases</span>
+            </div>
+            <div class="pebble pebble-2">
+              <span class="pebble-category">Web</span>
+              <span class="pebble-name">MERN Stack</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Data Engineering -->
-        <div class="pebble pebble-7">
-          <span class="pebble-category">Data</span>
-          <span class="pebble-name">Power BI</span>
-        </div>
-        <div class="pebble pebble-8">
-          <span class="pebble-category">Data</span>
-          <span class="pebble-name">SQL Databases</span>
-        </div>
-
-        <!-- Web/API -->
-        <div class="pebble pebble-1">
-          <span class="pebble-category">Backend</span>
-          <span class="pebble-name">FastAPI</span>
-        </div>
-        <div class="pebble pebble-2">
-          <span class="pebble-category">Web</span>
-          <span class="pebble-name">MERN Stack</span>
-        </div>
       </div>
     </div>
   </section>
 
   <!-- Section: Education -->
-  <section class="section">
+  <section class="section" id="education">
     <div class="container">
       <div class="garden-intro reveal" style="text-align: center;">
-        <h2>The Path of <em>Learning</em></h2>
+        <h2 data-section-name="Learning">The Path of <em>Learning</em></h2>
         <p>My academic foundation in computing and machine learning.</p>
       </div>
 
@@ -288,7 +361,7 @@
     <div class="container contact-layout">
       <div class="contact-details reveal">
         <div>
-          <h2 class="section-title">Let's build in <em>silence</em></h2>
+          <h2 class="section-title" data-section-name="Contact">Let's build in <em>silence</em></h2>
           <p>
             Interested in AI development, ML model engineering, or data automation pipelines? Let's connect and build systems that last.
           </p>
