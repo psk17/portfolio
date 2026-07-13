@@ -253,10 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // 5. Education Timeline
-    const eduIntro = document.querySelectorAll('#skills + section .garden-intro')[0] || document.querySelector('.edu-timeline').previousElementSibling;
-    if (eduIntro) {
-      gsap.fromTo(eduIntro, { opacity: 0, y: 30 }, {
+    // 5. Pathways Section
+    const pathwaysIntro = document.querySelector('#pathways .garden-intro');
+    if (pathwaysIntro) {
+      gsap.fromTo(pathwaysIntro, { opacity: 0, y: 30 }, {
         opacity: 1,
         y: 0,
         duration: 0.6,
@@ -264,46 +264,28 @@ document.addEventListener('DOMContentLoaded', () => {
         onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
         onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
-          trigger: eduIntro,
+          trigger: pathwaysIntro,
           start: 'top 85%'
         }
       });
     }
 
-    const eduItems = document.querySelectorAll('.edu-item');
-    eduItems.forEach((item) => {
-      const node = item.querySelector('.edu-node');
-      const date = item.querySelector('.edu-date');
-      const school = item.querySelector('.edu-school');
-      const degree = item.querySelector('.edu-degree');
-      
-      gsap.fromTo(node, { scale: 0, opacity: 0 }, {
-        scale: 1,
+    const pathwaysCols = document.querySelectorAll('#pathways .pathways-col');
+    if (pathwaysCols.length > 0) {
+      gsap.fromTo(pathwaysCols, { opacity: 0, y: 40 }, {
         opacity: 1,
-        duration: 0.4,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.15,
         ease: 'power2.out',
         onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
         onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
         scrollTrigger: {
-          trigger: item,
+          trigger: '#pathways .pathways-grid',
           start: 'top 85%'
         }
       });
-      
-      gsap.fromTo([date, school, degree], { opacity: 0, x: -20 }, {
-        opacity: 1,
-        x: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: 'power2.out',
-        onStart: function() { gsap.set(this.targets(), { willChange: "transform,opacity" }); },
-        onComplete: function() { gsap.set(this.targets(), { clearProps: "willChange" }); },
-        scrollTrigger: {
-          trigger: item,
-          start: 'top 85%'
-        }
-      });
-    });
+    }
 
     // 6. Contact Section
     const contactLayout = document.querySelector('.contact-layout');

@@ -961,7 +961,7 @@ body {
   counter-reset: section-counter;
 }
 
-#about, #projects, #skills, #education, #contact {
+#about, #projects, #skills, #pathways, #contact {
   counter-increment: section-counter;
 }
 
@@ -979,8 +979,8 @@ h2[data-section-name]::before {
   opacity: 0.85;
 }
 
-/* Adjust centering alignment for education section label */
-#education .garden-intro h2[data-section-name]::before {
+/* Adjust centering alignment for pathways section label */
+#pathways .garden-intro h2[data-section-name]::before {
   text-align: center;
 }
 
@@ -1176,4 +1176,148 @@ h2[data-section-name]::before {
     margin-bottom: 0;
   }
 }
+
+/* --- Phase 8: Pathways Layout --- */
+.pathways-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.pathways-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.pathways-col-title {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 500;
+  border-bottom: 1.5px solid var(--border-color);
+  padding-bottom: 0.8rem;
+  color: var(--accent-rust);
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+.pathway-item {
+  position: relative;
+  padding-left: 1.8rem;
+}
+
+.pathway-node {
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 8px;
+  height: 8px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--text-color);
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.pathway-item:hover .pathway-node {
+  background-color: var(--accent-moss);
+}
+
+.pathway-date {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--accent-rust);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.pathway-name {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 0.2rem;
+  color: var(--text-color);
+}
+
+.pathway-sub {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-bottom: 0.8rem;
+}
+
+.pathway-meta {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent-moss);
+}
+
+.pathway-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.achievements-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.achievement-highlight {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 0.2rem;
+}
+
+.achievement-desc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.certifications-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.certifications-list li {
+  display: flex;
+  flex-direction: column;
+  border-left: 1.5px solid var(--border-color);
+  padding-left: 1rem;
+}
+
+.cert-authority {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-rust);
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+
+.cert-name {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+
+@media (max-width: 992px) {
+  .pathways-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
 
