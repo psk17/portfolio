@@ -218,8 +218,30 @@
 
         <!-- Project 3 -->
         <div class="project-item reveal">
-          <div class="project-media">
-            <img src="project_campus_connect.png" alt="Campus Connect" class="project-img" loading="lazy">
+          <div class="project-media visualizer-panel">
+            <div class="feed-container" id="campusFeed">
+              <div class="feed-item" onclick="resolveDoubt(this)">
+                <div class="feed-meta">
+                  <span class="feed-category">Doubt</span>
+                  <span class="feed-title">How to map nested routes in Express?</span>
+                </div>
+                <button class="feed-action-btn">Resolve</button>
+              </div>
+              <div class="feed-item" onclick="resolveDoubt(this)">
+                <div class="feed-meta">
+                  <span class="feed-category">Lost & Found</span>
+                  <span class="feed-title">Keys found near Block C library entrance.</span>
+                </div>
+                <button class="feed-action-btn">Claim</button>
+              </div>
+              <div class="feed-item" onclick="resolveDoubt(this)">
+                <div class="feed-meta">
+                  <span class="feed-category">Complaint</span>
+                  <span class="feed-title">Water dispenser outlet leakage in lab corridor.</span>
+                </div>
+                <button class="feed-action-btn">Resolve</button>
+              </div>
+            </div>
           </div>
           <div class="project-info">
             <span class="project-num">03.</span>
@@ -238,8 +260,8 @@
 
         <!-- Project 4 -->
         <div class="project-item reveal">
-          <div class="project-media">
-            <img src="project_customer_churn.png" alt="Customer Churn Prediction" class="project-img" loading="lazy">
+          <div class="project-media visualizer-panel" id="churnPanel">
+            <canvas class="churn-canvas" id="churnCanvas"></canvas>
           </div>
           <div class="project-info">
             <span class="project-num">04.</span>
@@ -257,8 +279,9 @@
 
         <!-- Project 5 -->
         <div class="project-item reveal">
-          <div class="project-media">
-            <img src="project_threat_hash.png" alt="Cyber Security Threat Detection" class="project-img" loading="lazy">
+          <div class="project-media visualizer-panel">
+            <div class="hash-table-grid" id="hashGrid"></div>
+            <div class="hash-console" id="hashConsole">Console Idle. Hover over index slots to trace calculations...</div>
           </div>
           <div class="project-info">
             <span class="project-num">05.</span>
@@ -270,6 +293,64 @@
               <li>Algorithms</li>
               <li>Hash Tables</li>
               <li>Security Analysis</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="project-item reveal">
+          <div class="project-media visualizer-panel" id="chemPanel">
+            <div class="chem-wrapper">
+              <canvas class="chem-canvas" id="chemCanvas"></canvas>
+              <div class="admet-dashboard">
+                <span class="admet-title">Molecular Scan</span>
+                
+                <div class="admet-bar-group">
+                  <div class="admet-label">
+                    <span>Absorption (HIA)</span>
+                    <span class="admet-label-val" id="valAbs">--</span>
+                  </div>
+                  <div class="admet-track"><div class="admet-fill" id="barAbs"></div></div>
+                </div>
+
+                <div class="admet-bar-group">
+                  <div class="admet-label">
+                    <span>Toxicity (hERG)</span>
+                    <span class="admet-label-val" id="valTox">--</span>
+                  </div>
+                  <div class="admet-track"><div class="admet-fill" id="barTox"></div></div>
+                </div>
+
+                <div class="admet-bar-group">
+                  <div class="admet-label">
+                    <span>Clearance (TDC)</span>
+                    <span class="admet-label-val" id="valClear">--</span>
+                  </div>
+                  <div class="admet-track"><div class="admet-fill moss" id="barClear"></div></div>
+                </div>
+
+                <div class="admet-bar-group">
+                  <div class="admet-label">
+                    <span>BBB Penetration</span>
+                    <span class="admet-label-val" id="valBbb">--</span>
+                  </div>
+                  <div class="admet-track"><div class="admet-fill moss" id="barBbb"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="project-num">06.</span>
+            <h3>ChemXplore</h3>
+            <p>
+              An ADMET prediction platform leveraging Chemprop-RDKit machine learning models trained on Therapeutics Data Commons (TDC) datasets. Evaluates large-scale chemical libraries for drug discovery.
+            </p>
+            <ul class="project-tags">
+              <li>ADMET-AI</li>
+              <li>Chemprop</li>
+              <li>RDKit</li>
+              <li>Python</li>
+              <li>HTML</li>
             </ul>
           </div>
         </div>

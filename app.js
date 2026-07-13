@@ -817,5 +817,313 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeProjectCanvas();
     requestAnimationFrame(drawProjectNN);
   }
+
+  // =========================================================================
+  // --- Project 3: Campus Connect (Doubt Resolver) ---
+  // =========================================================================
+  window.resolveDoubt = function(item) {
+    item.classList.toggle('resolved');
+    const btn = item.querySelector('.feed-action-btn');
+    if (item.classList.contains('resolved')) {
+      btn.innerText = "Resolved";
+    } else {
+      const cat = item.querySelector('.feed-category').innerText;
+      btn.innerText = cat === "LOST & FOUND" ? "Claim" : "Resolve";
+    }
+  };
+
+  // =========================================================================
+  // --- Project 4: Customer Churn Canvas ---
+  // =========================================================================
+  const churnPanel = document.getElementById('churnPanel');
+  const churnCanvas = document.getElementById('churnCanvas');
+  if (churnPanel && churnCanvas) {
+    const cc = churnCanvas.getContext('2d');
+    let ccWidth, ccHeight;
+    let ccMouseX = null, ccMouseY = null, ccMouseActive = false;
+    let customers = [];
+
+    function initChurn() {
+      ccWidth = churnCanvas.width = churnPanel.clientWidth;
+      ccHeight = churnCanvas.height = churnPanel.clientHeight;
+      customers = [];
+      for (let i = 0; i < 40; i++) {
+        const isChurn = Math.random() > 0.45;
+        customers.push({
+          x: Math.random() * (ccWidth - 60) + 30,
+          y: Math.random() * (ccHeight - 60) + 30,
+          isChurn: isChurn,
+          origX: 0, origY: 0
+        });
+        customers[i].origX = customers[i].x;
+        customers[i].origY = customers[i].y;
+      }
+    }
+
+    churnPanel.addEventListener('mousemove', (e) => {
+      const rect = churnCanvas.getBoundingClientRect();
+      ccMouseX = e.clientX - rect.left;
+      ccMouseY = e.clientY - rect.top;
+      ccMouseActive = true;
+    });
+
+    churnPanel.addEventListener('mouseleave', () => {
+      ccMouseActive = false;
+    });
+
+    function drawChurn() {
+      cc.clearRect(0, 0, ccWidth, ccHeight);
+      const isL = document.documentElement.classList.contains('light-theme');
+
+      // Draw decision boundary line
+      cc.strokeStyle = isL ? 'rgba(27, 25, 23, 0.08)' : 'rgba(217, 107, 67, 0.15)';
+      cc.setLineDash([4, 4]);
+      cc.lineWidth = 1.5;
+      cc.beginPath();
+      cc.moveTo(0, ccHeight * 0.7);
+      cc.bezierCurveTo(ccWidth * 0.4, ccHeight * 0.5, ccWidth * 0.6, ccHeight * 0.3, ccWidth, ccHeight * 0.25);
+      cc.stroke();
+      cc.setLineDash([]);
+
+      // Draw client nodes
+      customers.forEach(c => {
+        let x = c.origX;
+        let y = c.origY;
+
+        if (ccMouseActive) {
+          const dx = ccMouseX - x;
+          const dy = ccMouseY - y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 70) {
+            const force = (70 - dist) * 0.2;
+            x -= (dx / dist) * force;
+            y -= (dy / dist) * force;
+          }
+        }
+
+        cc.fillStyle = c.isChurn ? 'var(--accent-rust)' : 'var(--accent-moss)';
+        cc.beginPath();
+        cc.arc(x, y, 4.5, 0, Math.PI * 2);
+        cc.fill();
+      });
+
+      // Local cursor prediction readout
+      if (ccMouseActive) {
+        cc.strokeStyle = isL ? 'rgba(27, 25, 23, 0.12)' : 'rgba(229, 230, 228, 0.15)';
+        cc.lineWidth = 1;
+        cc.beginPath();
+        cc.arc(ccMouseX, ccMouseY, 70, 0, Math.PI * 2);
+        cc.stroke();
+
+        const risk = Math.min(99.9, Math.max(0.1, (ccMouseY / ccHeight) * 100)).toFixed(1);
+        cc.fillStyle = isL ? 'rgba(235, 229, 216, 0.96)' : 'rgba(22, 23, 25, 0.95)';
+        cc.fillRect(ccMouseX + 15, ccMouseY - 35, 130, 45);
+        cc.strokeStyle = 'var(--border-color)';
+        cc.strokeRect(ccMouseX + 15, ccMouseY - 35, 130, 45);
+
+        cc.fillStyle = 'var(--text-color)';
+        cc.font = '9px monospace';
+        cc.fillText(`Model: XGBoost`, ccMouseX + 22, ccMouseY - 22);
+        cc.fillStyle = risk > 50 ? 'var(--accent-rust)' : 'var(--accent-moss)';
+        cc.fillText(`Local Churn: ${risk}%`, ccMouseX + 22, ccMouseY - 10);
+      }
+
+      requestAnimationFrame(drawChurn);
+    }
+
+    initChurn();
+    requestAnimationFrame(drawChurn);
+    window.addEventListener('resize', initChurn);
+  }
+
+  // =========================================================================
+  // --- Project 5: Threat Hash Table ---
+  // =========================================================================
+  const hashGrid = document.getElementById('hashGrid');
+  const hashConsole = document.getElementById('hashConsole');
+  if (hashGrid && hashConsole) {
+    const signatures = [
+      "0xFC82", "Clean", "Clean", "0x3A21", 
+      "Clean", "0x8E12", "Clean", "Clean", 
+      "0x9A4E", "Clean", "0xBD22", "Clean",
+      "Clean", "0x14E9", "Clean", "Clean"
+    ];
+
+    function initHashGrid() {
+      hashGrid.innerHTML = '';
+      for (let i = 0; i < 16; i++) {
+        const sig = signatures[i];
+        const isThreat = sig !== "Clean";
+        const div = document.createElement('div');
+        div.className = `hash-cell ${isThreat ? 'collision' : ''}`;
+        div.innerHTML = `
+          <span class="hash-index">[${i}]</span>
+          <span class="hash-value">${sig}</span>
+        `;
+        div.addEventListener('mouseenter', () => {
+          if (isThreat) {
+            hashConsole.innerHTML = `Calculated Hash: <span style="color: var(--accent-rust)">hash("${sig}") % 16 = ${i}</span>. Collision matched. <span style="color: #f44336; font-weight: bold;">[ALERT]</span>`;
+            div.style.transform = 'scale(1.06)';
+          } else {
+            hashConsole.innerHTML = `Calculated Hash: <span style="color: var(--accent-moss)">hash("log_entry") % 16 = ${i}</span>. Slot is clear. [OK]`;
+            div.style.transform = 'scale(1.06)';
+          }
+          div.classList.add('active');
+        });
+        div.addEventListener('mouseleave', () => {
+          hashConsole.innerHTML = "Console Idle. Hover over index slots to trace calculations...";
+          div.classList.remove('active');
+          div.style.transform = 'none';
+        });
+        hashGrid.appendChild(div);
+      }
+    }
+    initHashGrid();
+  }
+
+  // =========================================================================
+  // --- Project 6: ChemXplore (Molecule Canvas + Gauges) ---
+  // =========================================================================
+  const chemPanel = document.getElementById('chemPanel');
+  const chemCanvas = document.getElementById('chemCanvas');
+  if (chemPanel && chemCanvas) {
+    const ch = chemCanvas.getContext('2d');
+    let chWidth, chHeight;
+    let chemMouseX = null, chemMouseY = null, chemMouseActive = false;
+    let atoms = [];
+
+    const barAbs = document.getElementById('barAbs');
+    const barTox = document.getElementById('barTox');
+    const barClear = document.getElementById('barClear');
+    const barBbb = document.getElementById('barBbb');
+    const valAbs = document.getElementById('valAbs');
+    const valTox = document.getElementById('valTox');
+    const valClear = document.getElementById('valClear');
+    const valBbb = document.getElementById('valBbb');
+
+    function initChem() {
+      chWidth = chemCanvas.width = chemPanel.clientWidth * 0.6;
+      chHeight = chemCanvas.height = chemPanel.clientHeight;
+      
+      const cx = chWidth / 2;
+      const cy = chHeight / 2;
+      const r = 45;
+      
+      atoms = [];
+      for (let i = 0; i < 6; i++) {
+        const angle = (i * Math.PI) / 3;
+        atoms.push({
+          x: cx + Math.cos(angle) * r,
+          y: cy + Math.sin(angle) * r,
+          label: "C",
+          abs: 60 + i * 5,
+          tox: 5 + i * 8,
+          clear: 80 - i * 10,
+          bbb: i % 2 === 0 ? "High" : "Low"
+        });
+      }
+      atoms.push({ x: cx + Math.cos(0) * (r + 30), y: cy + Math.sin(0) * (r + 30), label: "O", abs: 88, tox: 4, clear: 92, bbb: "High" });
+      atoms.push({ x: cx + Math.cos(Math.PI) * (r + 30), y: cy + Math.sin(Math.PI) * (r + 30), label: "NH2", abs: 94, tox: 14, clear: 45, bbb: "Low" });
+    }
+
+    chemCanvas.addEventListener('mousemove', (e) => {
+      const rect = chemCanvas.getBoundingClientRect();
+      chemMouseX = e.clientX - rect.left;
+      chemMouseY = e.clientY - rect.top;
+      chemMouseActive = true;
+      scanAtom();
+    });
+
+    chemCanvas.addEventListener('mouseleave', () => {
+      chemMouseActive = false;
+      resetGauges();
+    });
+
+    function scanAtom() {
+      if (!chemMouseActive) return;
+      let nearest = null;
+      let minD = 35;
+      atoms.forEach(a => {
+        const dx = chemMouseX - a.x;
+        const dy = chemMouseY - a.y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < minD) {
+          minD = d;
+          nearest = a;
+        }
+      });
+
+      if (nearest) {
+        if (barAbs) { barAbs.style.width = `${nearest.abs}%`; valAbs.innerText = `${nearest.abs}%`; }
+        if (barTox) { barTox.style.width = `${nearest.tox}%`; valTox.innerText = `${nearest.tox}%`; }
+        if (barClear) { barClear.style.width = `${nearest.clear}%`; valClear.innerText = `${nearest.clear}%`; }
+        if (barBbb) { barBbb.style.width = nearest.bbb === "High" ? "85%" : "25%"; valBbb.innerText = nearest.bbb; }
+      }
+    }
+
+    function resetGauges() {
+      if (barAbs) { barAbs.style.width = '0%'; valAbs.innerText = '--'; }
+      if (barTox) { barTox.style.width = '0%'; valTox.innerText = '--'; }
+      if (barClear) { barClear.style.width = '0%'; valClear.innerText = '--'; }
+      if (barBbb) { barBbb.style.width = '0%'; valBbb.innerText = '--'; }
+    }
+
+    function drawChem() {
+      ch.clearRect(0, 0, chWidth, chHeight);
+      const isL = document.documentElement.classList.contains('light-theme');
+
+      ch.strokeStyle = isL ? 'rgba(27, 25, 23, 0.12)' : 'rgba(229, 230, 228, 0.15)';
+      ch.lineWidth = 2.5;
+      
+      for (let i = 0; i < 6; i++) {
+        const next = (i + 1) % 6;
+        ch.beginPath();
+        ch.moveTo(atoms[i].x, atoms[i].y);
+        ch.lineTo(atoms[next].x, atoms[next].y);
+        ch.stroke();
+
+        if (i % 2 === 0) {
+          const innerR = 36;
+          const cx = chWidth / 2;
+          const cy = chHeight / 2;
+          const a1 = (i * Math.PI) / 3;
+          const a2 = (next * Math.PI) / 3;
+          ch.lineWidth = 1;
+          ch.beginPath();
+          ch.moveTo(cx + Math.cos(a1) * innerR, cy + Math.sin(a1) * innerR);
+          ch.lineTo(cx + Math.cos(a2) * innerR, cy + Math.sin(a2) * innerR);
+          ch.stroke();
+          ch.lineWidth = 2.5;
+        }
+      }
+
+      ch.beginPath(); ch.moveTo(atoms[0].x, atoms[0].y); ch.lineTo(atoms[6].x, atoms[6].y); ch.stroke();
+      ch.beginPath(); ch.moveTo(atoms[3].x, atoms[3].y); ch.lineTo(atoms[7].x, atoms[7].y); ch.stroke();
+
+      atoms.forEach(a => {
+        const isHover = chemMouseActive && Math.sqrt((chemMouseX - a.x)**2 + (chemMouseY - a.y)**2) < 20;
+        
+        ch.fillStyle = isHover ? 'var(--accent-rust)' : (isL ? '#DDD5BE' : '#161719');
+        ch.beginPath();
+        ch.arc(a.x, a.y, 11, 0, Math.PI * 2);
+        ch.fill();
+        ch.strokeStyle = isHover ? 'var(--text-color)' : 'var(--border-color)';
+        ch.lineWidth = 1;
+        ch.stroke();
+
+        ch.fillStyle = isHover ? '#1B1917' : 'var(--text-color)';
+        ch.font = '10px sans-serif';
+        ch.textAlign = 'center';
+        ch.textBaseline = 'middle';
+        ch.fillText(a.label, a.x, a.y);
+      });
+
+      requestAnimationFrame(drawChem);
+    }
+
+    initChem();
+    requestAnimationFrame(drawChem);
+    window.addEventListener('resize', initChem);
+  }
 });
 

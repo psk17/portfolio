@@ -1529,5 +1529,253 @@ h2[data-section-name]::before {
   display: block;
 }
 
+/* --- Additional Interactive Panels: Projects 3, 4, 5 & 6 --- */
+.visualizer-panel {
+  width: 100%;
+  height: 320px;
+  background-color: #0c0c0d;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+html.light-theme .visualizer-panel {
+  background-color: var(--bg-secondary);
+}
+
+/* 1. Campus Connect Feed */
+.feed-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.feed-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.8rem 1rem;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.feed-item:hover {
+  border-color: var(--accent-rust);
+  transform: translateX(4px);
+}
+
+.feed-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: left;
+}
+
+.feed-category {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-moss);
+  font-weight: 600;
+}
+
+.feed-title {
+  font-size: 0.85rem;
+  color: var(--text-color);
+}
+
+.feed-action-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.feed-item:hover .feed-action-btn {
+  background-color: var(--accent-rust);
+  border-color: var(--accent-rust);
+  color: #1B1917;
+}
+
+.feed-item.resolved {
+  opacity: 0.45;
+  border-color: var(--border-color);
+}
+
+.feed-item.resolved .feed-action-btn {
+  background-color: var(--accent-moss);
+  border-color: var(--accent-moss);
+  color: var(--text-color);
+}
+
+/* 2. Customer Churn Canvas */
+.churn-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+/* 3. Threat Hash Table Grid */
+.hash-table-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  padding: 1rem;
+  height: calc(100% - 60px);
+}
+
+.hash-cell {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  transition: all 0.3s;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+.hash-index {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.hash-value {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-color);
+  font-family: monospace;
+  text-align: center;
+  word-break: break-all;
+}
+
+.hash-cell.active {
+  border-color: var(--accent-rust);
+  background-color: rgba(217, 107, 67, 0.05);
+}
+
+.hash-cell.collision {
+  border-color: #f44336;
+  background-color: rgba(244, 67, 54, 0.08);
+}
+
+.hash-console {
+  height: 60px;
+  background-color: #080809;
+  border-top: 1px solid var(--border-color);
+  font-family: monospace;
+  font-size: 0.75rem;
+  padding: 0.6rem 1rem;
+  color: var(--text-muted);
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+html.light-theme .hash-console {
+  background-color: #E6E0D2;
+}
+
+/* 4. ChemXplore ADMET Panel */
+.chem-wrapper {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  width: 100%;
+  height: 100%;
+}
+
+.chem-canvas {
+  width: 100%;
+  height: 100%;
+  background-color: #080809;
+  cursor: pointer;
+}
+
+html.light-theme .chem-canvas {
+  background-color: #E6E0D2;
+}
+
+.admet-dashboard {
+  border-left: 1px solid var(--border-color);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background-color: #0c0c0d;
+  justify-content: center;
+  text-align: left;
+}
+
+html.light-theme .admet-dashboard {
+  background-color: var(--bg-secondary);
+}
+
+.admet-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-rust);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.admet-bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.admet-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.admet-label-val {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.admet-track {
+  width: 100%;
+  height: 5px;
+  background-color: var(--border-color);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.admet-fill {
+  height: 100%;
+  background-color: var(--accent-rust);
+  width: 0%;
+  transition: width 0.6s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+.admet-fill.moss {
+  background-color: var(--accent-moss);
+}
+
 
 
