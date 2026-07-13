@@ -109,8 +109,20 @@
         <!-- Project 1 (Pinned Scroll Storytelling) -->
         <div class="project-pinned-wrapper reveal">
           <div class="project-pinned-left">
-            <div class="project-media">
-              <img src="project_rag.png" alt="RAG Knowledge Retrieval System" class="project-img" loading="lazy">
+            <div class="project-media terminal-media" id="terminalProjectCard" style="display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; background-color: #12100f; width: 100%;">
+              <div class="terminal-header">
+                <div class="terminal-dot active"></div>
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+                <span class="terminal-title">RAG_Similarity_Engine.py</span>
+              </div>
+              <div class="terminal-body" id="projectTerminalBody">
+                <div class="terminal-line terminal-prompt">python query_rag.py --query "security threat"</div>
+                <div class="terminal-line">[QUERY] "security threat"</div>
+                <div class="terminal-line">[DATABASE] Searching vector index mappings...</div>
+                <div class="terminal-line highlight">[MATRIX] Similarity: Cosine(Q, D12) = 0.9412</div>
+                <div class="terminal-line success">[SUCCESS] Context retrieved: "Port scan detected on subnet..."</div>
+              </div>
             </div>
           </div>
           <div class="project-pinned-right">
@@ -151,8 +163,8 @@
         <!-- Project 2 (Pinned Scroll Storytelling) -->
         <div class="project-pinned-wrapper reveal">
           <div class="project-pinned-left">
-            <div class="project-media">
-              <img src="project_threat_detection.png" alt="Real-time Log Threat Detection API" class="project-img" loading="lazy">
+            <div class="project-media" id="nnProjectCard" style="width: 100%; background-color: #12100f; cursor: crosshair;">
+              <canvas class="net-canvas" id="projectNnCanvas"></canvas>
             </div>
           </div>
           <div class="project-pinned-right">

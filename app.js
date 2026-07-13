@@ -596,5 +596,194 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  /* --- Concept A: Terminal Emulator (Project 1) --- */
+  const terminalProjectCard = document.getElementById('terminalProjectCard');
+  const projectTerminalBody = document.getElementById('projectTerminalBody');
+
+  if (terminalProjectCard && projectTerminalBody) {
+    const projectLogs = [
+      { text: 'python query_rag.py --query "security threat"', type: 'prompt' },
+      { text: '[QUERY] "security threat"', type: 'info' },
+      { text: '[DATABASE] Searching vector index mappings...', type: 'info' },
+      { text: '[MATRIX] Similarity: Cosine(Q, D12) = 0.9678', type: 'highlight' },
+      { text: '[SUCCESS] Retreived context: "Port scan detected on subnet 10.0..."', type: 'success' },
+      { text: 'python run_model_inference.py --batch_size 16', type: 'prompt' },
+      { text: '[INFO] Launching Isolation Forest outlier algorithm...', type: 'info' },
+      { text: '[WARNING] Outlier score exceeded threshold limit (0.75)', type: 'highlight' },
+      { text: '[ALERT] Threat anomaly flagged! IP: 185.220.101.4', type: 'highlight' },
+      { text: '[SUCCESS] Logs synchronized with FastAPI threat reporter.', type: 'success' },
+    ];
+
+    let pLogIndex = 0;
+    let pStreamSpeed = 1500;
+    let pLogTimer = null;
+
+    function addProjectLogLine() {
+      if (projectTerminalBody.children.length > 5) {
+        projectTerminalBody.removeChild(projectTerminalBody.firstChild);
+      }
+
+      const log = projectLogs[pLogIndex];
+      const div = document.createElement('div');
+      div.className = `terminal-line ${log.type === 'prompt' ? 'terminal-prompt' : ''} ${log.type === 'highlight' ? 'highlight' : ''} ${log.type === 'success' ? 'success' : ''}`;
+      div.innerText = log.text;
+      
+      projectTerminalBody.appendChild(div);
+      projectTerminalBody.scrollTop = projectTerminalBody.scrollHeight;
+      
+      pLogIndex = (pLogIndex + 1) % projectLogs.length;
+      pLogTimer = setTimeout(addProjectLogLine, pStreamSpeed);
+    }
+
+    terminalProjectCard.addEventListener('mouseenter', () => {
+      pStreamSpeed = 350;
+      clearTimeout(pLogTimer);
+      addProjectLogLine();
+    });
+
+    terminalProjectCard.addEventListener('mouseleave', () => {
+      pStreamSpeed = 1500;
+    });
+
+    addProjectLogLine();
+  }
+
+  /* --- Concept B: Neural Network Visualizer (Project 2) --- */
+  const nnProjectCard = document.getElementById('nnProjectCard');
+  const projectNnCanvas = document.getElementById('projectNnCanvas');
+
+  if (nnProjectCard && projectNnCanvas) {
+    const pCtx = projectNnCanvas.getContext('2d');
+    let pMouseX = null;
+    let pMouseY = null;
+    let pMouseActive = false;
+    let pPulseX = -50;
+    let pNodes = [];
+
+    function resizeProjectCanvas() {
+      projectNnCanvas.width = nnProjectCard.clientWidth;
+      projectNnCanvas.height = nnProjectCard.clientHeight;
+      setupProjectNN();
+    }
+
+    nnProjectCard.addEventListener('mousemove', (e) => {
+      const rect = nnProjectCard.getBoundingClientRect();
+      pMouseX = e.clientX - rect.left;
+      pMouseY = e.clientY - rect.top;
+      pMouseActive = true;
+    });
+
+    nnProjectCard.addEventListener('mouseleave', () => {
+      pMouseActive = false;
+    });
+
+    const pLayers = [3, 4, 4, 2];
+
+    function setupProjectNN() {
+      pNodes = [];
+      const layerSpacing = projectNnCanvas.width / (pLayers.length + 0.5);
+      
+      pLayers.forEach((count, lIdx) => {
+        const x = layerSpacing * (lIdx + 0.7);
+        const ySpacing = projectNnCanvas.height / (count + 1);
+        
+        for (let nIdx = 0; nIdx < count; nIdx++) {
+          pNodes.push({
+            x: x,
+            y: ySpacing * (nIdx + 1),
+            layer: lIdx
+          });
+        }
+      });
+    }
+
+    function drawProjectNN() {
+      pCtx.clearRect(0, 0, projectNnCanvas.width, projectNnCanvas.height);
+      
+      if (pNodes.length === 0) setupProjectNN();
+
+      if (pMouseActive) {
+        pPulseX += 3.5;
+        if (pPulseX > projectNnCanvas.width + 100) pPulseX = -50;
+      } else {
+        pPulseX += 1.0;
+        if (pPulseX > projectNnCanvas.width + 100) pPulseX = -50;
+      }
+
+      // Connections
+      for (let i = 0; i < pNodes.length; i++) {
+        const n1 = pNodes[i];
+        for (let j = 0; j < pNodes.length; j++) {
+          const n2 = pNodes[j];
+          if (n2.layer === n1.layer + 1) {
+            const connectionMid = (n1.x + n2.x) / 2;
+            const distToPulse = Math.abs(connectionMid - pPulseX);
+            
+            if (distToPulse < 40) {
+              pCtx.strokeStyle = `rgba(181, 98, 59, ${0.4 + (40 - distToPulse)/40 * 0.6})`;
+              pCtx.lineWidth = 1.5;
+            } else {
+              pCtx.strokeStyle = 'rgba(58, 54, 50, 0.25)';
+              pCtx.lineWidth = 0.7;
+            }
+            
+            pCtx.beginPath();
+            pCtx.moveTo(n1.x, n1.y);
+            pCtx.lineTo(n2.x, n2.y);
+            pCtx.stroke();
+          }
+        }
+      }
+
+      // Nodes
+      pNodes.forEach(node => {
+        const distToPulse = Math.abs(node.x - pPulseX);
+        let nodeRadius = 6;
+        let nodeColor = '#3A3632';
+        let glowRadius = 0;
+
+        if (distToPulse < 30) {
+          nodeColor = '#B5623B';
+          nodeRadius = 8;
+          glowRadius = (30 - distToPulse) * 0.4;
+        } else if (pMouseActive && Math.abs(node.y - pMouseY) < 40 && Math.abs(node.x - pMouseX) < 40) {
+          nodeColor = '#7A8871';
+          nodeRadius = 7.5;
+        }
+
+        if (glowRadius > 0) {
+          pCtx.fillStyle = 'rgba(181, 98, 59, 0.25)';
+          pCtx.beginPath();
+          pCtx.arc(node.x, node.y, nodeRadius + glowRadius, 0, Math.PI * 2);
+          pCtx.fill();
+        }
+
+        pCtx.fillStyle = nodeColor;
+        pCtx.strokeStyle = 'var(--text-color)';
+        pCtx.lineWidth = 1;
+        pCtx.beginPath();
+        pCtx.arc(node.x, node.y, nodeRadius, 0, Math.PI * 2);
+        pCtx.fill();
+        pCtx.stroke();
+      });
+
+      // Overlay text diagnostics in the corner
+      pCtx.fillStyle = 'rgba(237, 232, 225, 0.4)';
+      pCtx.font = '9px monospace';
+      pCtx.fillText(`Epochs: 148/200`, 15, 20);
+      pCtx.fillText(`Loss: 0.041`, 15, 33);
+      
+      const predictionVal = pMouseActive ? (0.95 + Math.sin(Date.now() * 0.005) * 0.04).toFixed(4) : "0.9841";
+      pCtx.fillStyle = 'var(--accent-rust)';
+      pCtx.fillText(`Prediction Confidence: ${predictionVal}`, 15, 46);
+
+      requestAnimationFrame(drawProjectNN);
+    }
+
+    window.addEventListener('resize', resizeProjectCanvas);
+    resizeProjectCanvas();
+    requestAnimationFrame(drawProjectNN);
+  }
 });
 
