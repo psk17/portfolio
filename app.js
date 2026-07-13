@@ -721,10 +721,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const distToPulse = Math.abs(connectionMid - pPulseX);
             
             if (distToPulse < 40) {
-              pCtx.strokeStyle = `rgba(181, 98, 59, ${0.4 + (40 - distToPulse)/40 * 0.6})`;
+              pCtx.strokeStyle = `rgba(46, 125, 50, ${0.4 + (40 - distToPulse)/40 * 0.6})`;
               pCtx.lineWidth = 1.5;
             } else {
-              pCtx.strokeStyle = 'rgba(58, 54, 50, 0.25)';
+              pCtx.strokeStyle = 'rgba(58, 54, 50, 0.15)';
               pCtx.lineWidth = 0.7;
             }
             
@@ -740,28 +740,28 @@ document.addEventListener('DOMContentLoaded', () => {
       pNodes.forEach(node => {
         const distToPulse = Math.abs(node.x - pPulseX);
         let nodeRadius = 6;
-        let nodeColor = '#3A3632';
+        let nodeColor = '#A09D95'; // Soft grey inert node
         let glowRadius = 0;
 
         if (distToPulse < 30) {
-          nodeColor = '#B5623B';
+          nodeColor = '#2E7D32'; // Vibrant green pulse activated
           nodeRadius = 8;
           glowRadius = (30 - distToPulse) * 0.4;
         } else if (pMouseActive && Math.abs(node.y - pMouseY) < 40 && Math.abs(node.x - pMouseX) < 40) {
-          nodeColor = '#7A8871';
+          nodeColor = '#556652'; // Muted moss green hover
           nodeRadius = 7.5;
         }
 
         if (glowRadius > 0) {
-          pCtx.fillStyle = 'rgba(181, 98, 59, 0.25)';
+          pCtx.fillStyle = 'rgba(46, 125, 50, 0.2)';
           pCtx.beginPath();
           pCtx.arc(node.x, node.y, nodeRadius + glowRadius, 0, Math.PI * 2);
           pCtx.fill();
         }
 
         pCtx.fillStyle = nodeColor;
-        pCtx.strokeStyle = 'var(--text-color)';
-        pCtx.lineWidth = 1;
+        pCtx.strokeStyle = '#F4F1EA'; // Border matching light background
+        pCtx.lineWidth = 1.2;
         pCtx.beginPath();
         pCtx.arc(node.x, node.y, nodeRadius, 0, Math.PI * 2);
         pCtx.fill();
@@ -769,13 +769,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // Overlay text diagnostics in the corner
-      pCtx.fillStyle = 'rgba(237, 232, 225, 0.4)';
+      pCtx.fillStyle = 'rgba(46, 45, 42, 0.55)'; // Dark slate with transparency for light background readability
       pCtx.font = '9px monospace';
       pCtx.fillText(`Epochs: 148/200`, 15, 20);
       pCtx.fillText(`Loss: 0.041`, 15, 33);
       
       const predictionVal = pMouseActive ? (0.95 + Math.sin(Date.now() * 0.005) * 0.04).toFixed(4) : "0.9841";
-      pCtx.fillStyle = 'var(--accent-rust)';
+      pCtx.fillStyle = '#2E7D32'; // Vibrant green
       pCtx.fillText(`Prediction Confidence: ${predictionVal}`, 15, 46);
 
       requestAnimationFrame(drawProjectNN);

@@ -1323,11 +1323,12 @@ h2[data-section-name]::before {
 /* --- Concept A & B: Pinned Projects Visualizations --- */
 .terminal-media {
   cursor: crosshair;
+  background-color: #F4F1EA !important; /* Soft warm white */
 }
 
 .terminal-header {
-  background-color: #1B1917;
-  border-bottom: 1px solid var(--border-color);
+  background-color: #EBE7DD; /* Slightly darker warm paper */
+  border-bottom: 1px solid rgba(58, 54, 50, 0.15);
   padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
@@ -1339,20 +1340,21 @@ h2[data-section-name]::before {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--border-color);
+  background-color: rgba(58, 54, 50, 0.2);
 }
 
 .terminal-dot.active {
-  background-color: var(--accent-rust);
+  background-color: #2E7D32; /* Active green dot */
 }
 
 .terminal-title {
   font-family: var(--font-sans);
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  color: var(--text-muted);
+  color: #556652; /* Muted moss green */
   text-transform: uppercase;
   margin-left: 0.5rem;
+  font-weight: 500;
 }
 
 .terminal-body {
@@ -1360,7 +1362,7 @@ h2[data-section-name]::before {
   font-family: monospace;
   font-size: 0.8rem;
   line-height: 1.6;
-  color: var(--text-color);
+  color: #2E2D2A; /* Dark slate text */
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
@@ -1370,24 +1372,24 @@ h2[data-section-name]::before {
 }
 
 .terminal-line {
-  opacity: 0.55;
+  opacity: 0.7;
   transition: opacity 0.3s;
 }
 
 .terminal-line.highlight {
-  color: var(--accent-rust);
-  font-weight: 500;
+  color: #2E7D32; /* Vibrant emerald green highlight */
+  font-weight: 600;
   opacity: 1;
 }
 
 .terminal-line.success {
-  color: var(--accent-moss);
+  color: #1B5E20; /* Deep forest green */
   opacity: 1;
 }
 
 .terminal-prompt::before {
   content: "$ ";
-  color: var(--accent-rust);
+  color: #556652; /* Moss green prompt symbol */
   font-weight: bold;
 }
 
