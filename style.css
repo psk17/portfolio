@@ -22,6 +22,16 @@
   --cursor-color: rgba(217, 107, 67, 0.18); /* Copper ember custom cursor shadow */
 }
 
+html.light-theme {
+  --bg-color: #F2EDE4;      /* Warm cream background */
+  --bg-secondary: #EBE5D8;  /* Slightly darker warm sand */
+  --text-color: #1B1917;    /* Dark warm-charcoal text */
+  --text-muted: #66635C;    /* Muted charcoal for contrast compliance >4.5:1 */
+  --accent-moss: #556652;   /* Moss green for details in light theme */
+  --border-color: rgba(27, 25, 23, 0.15); /* Muted dark border line */
+  --cursor-color: rgba(217, 107, 67, 0.15); /* Keep copper-themed cursor */
+}
+
 /* --- Base Setup --- */
 * {
   box-sizing: border-box;
@@ -57,6 +67,84 @@ body {
   position: relative;
   overflow-x: hidden;
   touch-action: pan-y;
+  background-color: var(--bg-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* The Calm Animated Gradient Mesh Layer */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  background-color: var(--bg-color);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(42, 35, 32, 0.3) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(42, 35, 32, 0.35) 0%, transparent 55%),
+    radial-gradient(circle at 50% 50%, rgba(42, 35, 32, 0.2) 0%, transparent 40%);
+  animation: gradientMesh 22s ease-in-out infinite alternate;
+  pointer-events: none;
+  transition: background-color 0.4s ease;
+}
+
+html.light-theme body::before {
+  background-color: var(--bg-color);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(223, 214, 196, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(223, 214, 196, 0.5) 0%, transparent 55%),
+    radial-gradient(circle at 50% 50%, rgba(223, 214, 196, 0.3) 0%, transparent 40%);
+  animation: lightGradientMesh 22s ease-in-out infinite alternate;
+}
+
+@keyframes gradientMesh {
+  0% {
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(42, 35, 32, 0.3) 0%, transparent 45%),
+      radial-gradient(circle at 90% 80%, rgba(42, 35, 32, 0.35) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, rgba(42, 35, 32, 0.2) 0%, transparent 40%);
+  }
+  50% {
+    background-image: 
+      radial-gradient(circle at 30% 70%, rgba(42, 35, 32, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(42, 35, 32, 0.3) 0%, transparent 45%),
+      radial-gradient(circle at 40% 40%, rgba(42, 35, 32, 0.25) 0%, transparent 48%);
+  }
+  100% {
+    background-image: 
+      radial-gradient(circle at 80% 15%, rgba(42, 35, 32, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 20% 85%, rgba(42, 35, 32, 0.35) 0%, transparent 55%),
+      radial-gradient(circle at 60% 60%, rgba(42, 35, 32, 0.2) 0%, transparent 42%);
+  }
+}
+
+@keyframes lightGradientMesh {
+  0% {
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(223, 214, 196, 0.4) 0%, transparent 45%),
+      radial-gradient(circle at 90% 80%, rgba(223, 214, 196, 0.5) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, rgba(223, 214, 196, 0.3) 0%, transparent 40%);
+  }
+  50% {
+    background-image: 
+      radial-gradient(circle at 30% 70%, rgba(223, 214, 196, 0.45) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(223, 214, 196, 0.35) 0%, transparent 45%),
+      radial-gradient(circle at 40% 40%, rgba(223, 214, 196, 0.4) 0%, transparent 48%);
+  }
+  100% {
+    background-image: 
+      radial-gradient(circle at 80% 15%, rgba(223, 214, 196, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 20% 85%, rgba(223, 214, 196, 0.5) 0%, transparent 55%),
+      radial-gradient(circle at 60% 60%, rgba(223, 214, 196, 0.3) 0%, transparent 42%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none !important;
+  }
 }
 
 /* --- Texture Overlay (Dynamic Washi Paper Grain) --- */
@@ -212,19 +300,19 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 3rem;
-  z-index: 100;
-  mix-blend-mode: difference;
-  color: var(--bg-color); /* Works beautifully with difference mode on dark backgrounds */
+  padding: 1rem 3rem; /* Slightly more compact padding */
+  z-index: 1000; /* Ensure header stays above all pinned project panels */
+  background-color: rgba(15, 15, 16, 0.82); /* Dark scrim by default */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(229, 230, 228, 0.06);
+  color: var(--text-color);
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 
-/* Fallback for browsers that don't support difference blending */
-@supports not (mix-blend-mode: difference) {
-  header {
-    background-color: rgba(250, 247, 242, 0.9);
-    mix-blend-mode: normal;
-    color: var(--text-color);
-  }
+html.light-theme header {
+  background-color: rgba(242, 237, 228, 0.85); /* Light cream scrim */
+  border-bottom: 1px solid rgba(27, 25, 23, 0.08);
 }
 
 .logo {
@@ -239,6 +327,45 @@ nav ul {
   display: flex;
   list-style: none;
   gap: 2rem;
+  align-items: center;
+}
+
+.nav-clock-item {
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--border-color);
+  padding-left: 1rem;
+}
+
+.nav-clock {
+  font-size: 0.8rem;
+  font-family: monospace;
+  opacity: 0.65;
+  letter-spacing: 0.05em;
+}
+
+.nav-theme-item {
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.theme-toggle-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 nav a {
@@ -834,18 +961,19 @@ nav a:hover {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(15, 15, 16, 0.2);
+  border-bottom: 1px solid currentColor;
   padding: 0.8rem 0;
-  color: var(--bg-color);
+  color: inherit;
   font-family: var(--font-sans);
   font-size: 1.05rem;
-  transition: border-color 0.3s;
+  opacity: 0.85;
+  transition: border-color 0.3s, opacity 0.3s;
 }
 
 .form-group input:focus, 
 .form-group textarea:focus {
   outline: none;
-  border-bottom-color: var(--bg-color);
+  opacity: 1;
 }
 
 .form-group label {
@@ -853,9 +981,10 @@ nav a:hover {
   top: 0.8rem;
   left: 0;
   font-size: 0.9rem;
-  color: rgba(15, 15, 16, 0.45);
+  color: currentColor;
+  opacity: 0.6;
   pointer-events: none;
-  transition: transform 0.3s, font-size 0.3s, color 0.3s;
+  transition: transform 0.3s, font-size 0.3s, opacity 0.3s;
 }
 
 /* Handle floating labels */
@@ -865,7 +994,7 @@ nav a:hover {
 .form-group textarea:not(:placeholder-shown) ~ label {
   transform: translateY(-1.5rem);
   font-size: 0.75rem;
-  color: var(--accent-rust);
+  opacity: 1;
 }
 
 .contact-form .btn-primary {
