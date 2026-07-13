@@ -8,18 +8,18 @@
 
 /* --- Custom Variables & Tokens --- */
 :root {
-  --bg-color: #1B1917;      /* Warm charcoal, not pure black */
-  --bg-secondary: #252220;  /* Warm dark grey */
-  --text-color: #EDE8E1;    /* Off-white raw linen */
-  --text-muted: #928C81;    /* Muted secondary text adjusted for >4.5:1 WCAG AA contrast */
-  --accent-moss: #7A8871;   /* Faded sage (sparing accent secondary) */
-  --accent-rust: #B5623B;   /* Burnt clay/terracotta (accent primary) */
-  --accent-gold: #B5623B;   /* Burnt clay/terracotta (fallback for accent primary) */
-  --border-color: #3A3632;  /* Dark linen border */
+  --bg-color: #0F0F10;      /* Stark obsidian black void */
+  --bg-secondary: #161719;  /* Deep cold iron slate */
+  --text-color: #E5E6E4;    /* Cool silver linen */
+  --text-muted: #7E8480;    /* Cold ash gray (WCAG AA contrast compliant >4.5:1) */
+  --accent-moss: #4A5849;   /* Deep lichen green (dark triad undertone) */
+  --accent-rust: #D96B43;   /* Burnt copper ember (the touch of warmth) */
+  --accent-gold: #D96B43;   /* Burnt copper ember */
+  --border-color: #27292C;  /* Cold iron seam border */
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'Outfit', sans-serif;
   --cursor-size: 20px;
-  --cursor-color: rgba(181, 98, 59, 0.15); /* Terracotta-themed cursor shadow */
+  --cursor-color: rgba(217, 107, 67, 0.18); /* Copper ember custom cursor shadow */
 }
 
 /* --- Base Setup --- */
@@ -834,7 +834,7 @@ nav a:hover {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(27, 25, 23, 0.2);
+  border-bottom: 1px solid rgba(15, 15, 16, 0.2);
   padding: 0.8rem 0;
   color: var(--bg-color);
   font-family: var(--font-sans);
@@ -853,7 +853,7 @@ nav a:hover {
   top: 0.8rem;
   left: 0;
   font-size: 0.9rem;
-  color: rgba(27, 25, 23, 0.45);
+  color: rgba(15, 15, 16, 0.45);
   pointer-events: none;
   transition: transform 0.3s, font-size 0.3s, color 0.3s;
 }
@@ -1323,12 +1323,12 @@ h2[data-section-name]::before {
 /* --- Concept A & B: Pinned Projects Visualizations --- */
 .terminal-media {
   cursor: crosshair;
-  background-color: #F4F1EA !important; /* Soft warm white */
+  background-color: var(--bg-secondary) !important;
 }
 
 .terminal-header {
-  background-color: #EBE7DD; /* Slightly darker warm paper */
-  border-bottom: 1px solid rgba(58, 54, 50, 0.15);
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
   padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
@@ -1340,18 +1340,18 @@ h2[data-section-name]::before {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: rgba(58, 54, 50, 0.2);
+  background-color: var(--border-color);
 }
 
 .terminal-dot.active {
-  background-color: #2E7D32; /* Active green dot */
+  background-color: var(--accent-rust);
 }
 
 .terminal-title {
   font-family: var(--font-sans);
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  color: #556652; /* Muted moss green */
+  color: var(--accent-moss);
   text-transform: uppercase;
   margin-left: 0.5rem;
   font-weight: 500;
@@ -1362,7 +1362,7 @@ h2[data-section-name]::before {
   font-family: monospace;
   font-size: 0.8rem;
   line-height: 1.6;
-  color: #2E2D2A; /* Dark slate text */
+  color: var(--text-color);
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
@@ -1372,24 +1372,24 @@ h2[data-section-name]::before {
 }
 
 .terminal-line {
-  opacity: 0.7;
+  opacity: 0.65;
   transition: opacity 0.3s;
 }
 
 .terminal-line.highlight {
-  color: #2E7D32; /* Vibrant emerald green highlight */
+  color: var(--accent-rust);
   font-weight: 600;
   opacity: 1;
 }
 
 .terminal-line.success {
-  color: #1B5E20; /* Deep forest green */
+  color: #4CAF50;
   opacity: 1;
 }
 
 .terminal-prompt::before {
   content: "$ ";
-  color: #556652; /* Moss green prompt symbol */
+  color: var(--accent-moss);
   font-weight: bold;
 }
 
